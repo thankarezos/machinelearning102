@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import numpy as np
+import plots as pl
 
 df = pd.read_excel('data.xlsx')
 
@@ -71,63 +72,14 @@ for i in range(0, 30):
         lambda x: 1 if x < 0.1 else 2 if x < 0.3 else 3 if x < 0.5 else 4 if x < 0.7 else 5 if x < 0.9 else 6
     )
 
+# print(teamsPowerClasses)
+
+# pl.barCharts(teamsPowerClasses)
+# pl.stackedBars(teamsPowerClasses)
+
 print(teamsPowerClasses)
 
-# Get the number of days
-num_days = 30
+teamsPowerClasses = np.array(teamsPowerClasses)[...,2:]
+print(teamsPowerClasses)
+np.save("labels.npy", teamsPowerClasses)
 
-# Create an array of x-axis values for the columns
-x = np.arange(num_days)
-
-# Define the width of each column
-column_width = 0.8
-
-# Define the color for each power class
-colors = ['C0', 'C1', 'C2', 'C3', 'C4', 'C5']
-
-# Create the stacked column chart
-fig, ax = plt.subplots(figsize=(12, 6))
-
-# Initialize the bottom positions for each power class
-bottom = np.zeros(num_days)
-
-# Iterate over each power class
-for power_class in range(1, 7):
-
-    if power_class not in teamsPowerClasses.values:
-        continue
-    
-    class_counts = []
-    for day in range(1, num_days + 1):
-        column_name = str(day)
-        day_data = teamsPowerClasses[column_name].value_counts().sort_index()
-        count = day_data.loc[power_class] if power_class in day_data.index else 0
-        class_counts.append(count)
-    class_counts = np.array(class_counts)
-    
-    # Plot the stacked column for the power class
-    ax.bar(x, class_counts, width=column_width, bottom=bottom, label=f'Class {power_class}', color=colors[power_class-1])
-    
-    # Update the bottom positions
-    bottom += class_counts
-
-# Set the x-axis tick positions and labels
-ax.set_xticks(x)
-ax.set_xticklabels(range(1, num_days + 1))
-
-ax.set_ylim(top=ax.get_ylim()[1] * 1.1)
-
-# Set the chart title and labels
-ax.set_title('Team Power Classes for Each Day')
-ax.set_xlabel('Day')
-ax.set_ylabel('Number of Teams')
-
-# Add the custom legend
-legend_handles = [plt.Rectangle((0, 0), 1, 1, facecolor=colors[i], label=f'Class {i+1}') for i in range(6)]
-ax.legend(handles=legend_handles, loc='lower left')
-
-# Adjust the layout
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-
-# Show the chart
-plt.show()
