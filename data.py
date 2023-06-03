@@ -23,7 +23,7 @@ for i in range(0, 30):
     data['score1'] = firstTeam
     data['score2'] = secondTeam
 
-    print(data)
+    # print(data)
 
     column_name = f'{i + 1}'
 
@@ -47,7 +47,25 @@ for i in range(0, 30):
     previousDay = teams[column_name].copy()
 
     index += 9
+# teams = teams.iloc[:, ::-1] 
+# teams = teams.transpose()
 print(teams)
+
+teamsPower = teams.copy()
+
+for i in range(0, 30):
+    column_name = f'{i + 1}'
+    teamsPower[column_name] = teamsPower[column_name] / ((i+1) * 3)
+
+teamsPowerClasses = teamsPower.copy()
+
+for i in range(0, 30):
+    column_name = f'{i + 1}'
+    teamsPowerClasses[column_name] = teamsPower[column_name].apply(
+        lambda x: 1 if x < 0.1 else 2 if x < 0.3 else 3 if x < 0.5 else 4 if x < 0.7 else 5 if x < 0.9 else 6
+    )
+
+print(teamsPowerClasses)
 
 
 # data = df.iloc[index:index + 8, :5]
