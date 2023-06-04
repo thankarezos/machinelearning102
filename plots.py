@@ -2,7 +2,7 @@ from matplotlib.patches import Patch
 import matplotlib.pyplot as plt
 import numpy as np
 
-def stackedBars(teamsPowerClasses):
+def stackedBars(teamsPowerClasses, title='Team Power Classes for Each Day'):
     num_days = 30
 
     # Create an array of x-axis values for the columns
@@ -16,6 +16,7 @@ def stackedBars(teamsPowerClasses):
 
     # Create the stacked column chart
     fig, ax = plt.subplots(figsize=(12, 6))
+    ax.set_title(title)
 
     # Initialize the bottom positions for each power class
     bottom = np.zeros(num_days)
@@ -61,7 +62,7 @@ def stackedBars(teamsPowerClasses):
     # Show the chart
     plt.show()
 
-def barCharts(teamsPowerClasses):
+def barCharts(teamsPowerClasses, title='Team Power Classes for Each Day'):
     num_days = 30
 
     # Create an array of x-axis values for the bars
@@ -75,6 +76,7 @@ def barCharts(teamsPowerClasses):
 
     # Create the bar chart
     fig, ax = plt.subplots(figsize=(12, 6))
+    ax.set_title(title)
 
     # Iterate over each day
     for day in range(1, num_days + 1):
