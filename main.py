@@ -82,7 +82,27 @@ def main():
     
 
     dn.dataNaive()
-    nv.nayve()
+
+    print("Nayve")
+
+    while True:
+        print("1 - PCA")
+        print("2 - No PCA")
+        print("3 - Exit")
+        option = int(input("Choose an option: "))
+        if option < 1 or option > 3:
+            print("Invalid option")
+            continue
+        if option == 3:
+            break
+        if option == 1:
+            nv.nayve(isPCA=True)
+            break
+        if option == 2:
+            nv.nayve(isPCA=False)
+            break
+    input("Press enter to exit...")
+    return
 
 
 if __name__ == "__main__":

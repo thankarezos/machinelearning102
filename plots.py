@@ -1,6 +1,8 @@
 from matplotlib.patches import Patch
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+matplotlib.use('TkAgg')
 
 def stackedBars(teamsPowerClasses, title='Team Power Classes for Each Day'):
     num_days = 30
