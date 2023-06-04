@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import numpy as np
-import plots as pl
 import math
 
 df = pd.read_excel('data.xlsx')
@@ -20,7 +19,7 @@ teams = [None] * 30
 for i in range (30):
     teams[i] = pd.DataFrame({'Name': teamNames})
 
-print(teams[0])
+# print(teams[0])
 
 index  = 0
 
@@ -84,6 +83,7 @@ for i in range(0, 30):
             teams[i].loc[teams[i]['Name'] == row[2], 'apokrousis'] += row[18]
 
     index += 9
+print(teams[0])
 teamsNp = np.array(teams)
-print(teams)
+# print(teams)
 np.save("data.npy", teamsNp)

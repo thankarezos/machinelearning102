@@ -1,7 +1,4 @@
-from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
-import pandas as pd
-import plots as pl
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.decomposition import PCA
@@ -9,12 +6,11 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import precision_score
+import pandas as pd
 
 
 teamsOriginal = np.load("data.npy", allow_pickle=True)
 labels = np.load("nayve.npy", allow_pickle=True)
-
-print(labels.shape)
 
 teams = teamsOriginal[ : , : , 1: ]
 teams = teams.astype(np.float32)
@@ -30,10 +26,6 @@ def split(x,y):
     return x[:21] , y[:21] , x[21:],y[21:]
 
 Xtrain, ytrain, Xtest, ytest = split(teams , labels.T)
-
-
-print(ytrain.shape)
-print(Xtrain.shape)
 
 ytrain = np.transpose(ytrain)
 ytrain = np.reshape(ytrain, -1)
@@ -51,8 +43,9 @@ ytest = ytest.ravel()
 f1 = f1_score(ytest, predictions, average='macro')
 accuracy = accuracy_score(ytest, predictions)
 recall = recall_score(ytest, predictions, average='macro')
-precision = precision_score(ytest, predictions, average='macro')
+precision = precision_score(ytest, predictions, average='macro', zero_division=1)
 
+vayneMetrcis = pd.DataFrame([f1, accuracy, recall, precision], columns=['Nayve'], index=['f1', 'accuracy', 'recall', 'precision'])
 
 svm = SVC()
 svm.fit(Xtrain, ytrain)
@@ -63,7 +56,8 @@ ytest = ytest.ravel()
 f1 = f1_score(ytest, predictions, average='macro')
 accuracy = accuracy_score(ytest, predictions)
 recall = recall_score(ytest, predictions, average='macro')
-precision = precision_score(ytest, predictions, average='macro')
+precision = precision_score(ytest, predictions, average='macro', zero_division=1)
 
-print(f1, accuracy, recall, precision)
+vayneMetrcis["SVM"] = [f1, accuracy, recall, precision]
+print(vayneMetrcis)
 

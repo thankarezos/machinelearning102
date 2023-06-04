@@ -24,7 +24,6 @@ for i in range(0, 30):
     plt.cla()
     plt.scatter(x[:, 0], x[:, 1], c=kmeans.labels_)
     plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1] , marker='s', s=500, alpha=0.5)
-    # plt.plot(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1] , 'wo',markersize=15 ,alpha=0.5, path_effects=[pe.Stroke(linewidth=4, foreground='k'), pe.Normal()])
     plt.pause(3)
     
 
