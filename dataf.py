@@ -54,17 +54,22 @@ def dataf():
 
     teamsPower = teams.copy()
 
+    print(teamsPower.iloc[0:3])
+
     for i in range(0, 30):
         column_name = f'{i + 1}'
         teamsPower[column_name] = teamsPower[column_name] / ((i+1) * 3)
 
 
     teamsPowerClasses = teamsPower.copy()
+    print(teamsPowerClasses.iloc[0:3])
 
     for i in range(0, 30):
         column_name = f'{i + 1}'
         teamsPowerClasses[column_name] = teamsPower[column_name].apply(
             lambda x: 1 if x < 0.1 else 2 if x < 0.3 else 3 if x < 0.5 else 4 if x < 0.7 else 5 if x < 0.9 else 6
         )
+
+    print(teamsPowerClasses)
     np.save("labels.npy", np.array(teamsPowerClasses)[...,2:])
     return teamsPowerClasses

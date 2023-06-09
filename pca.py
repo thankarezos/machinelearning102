@@ -38,12 +38,16 @@ def pca():
     Xtrain = tf.reshape(Xtrain, (-1, 2))
     Xtest = tf.reshape(Xtest, (-1, 2))
     teams = tf.reshape(teams, (-1, 2))
+    labels = labels.astype(float)
+    teamsLabels = tf.convert_to_tensor(labels)
+    teamsLabels = tf.reshape(labels, (-1, 1))
 
     Model.fit(Xtrain, ytrain, batch_size=6, epochs=100, verbose=1)
     predictions = Model(teams)
 
     predictions = predictions.numpy().argmax(axis=-1).reshape(30, 16)
 
+    print("accuracy: ", Model.evaluate(teams, teamsLabels)[1])
 
 
 

@@ -39,9 +39,15 @@ def softmax():
     Xtrain = tf.reshape(Xtrain, (-1, 7))
     Xtest = tf.reshape(Xtest, (-1, 7))
     teams = tf.reshape(teams, (-1, 7))
+    labels = labels.astype(float)
+    teamsLabels = tf.convert_to_tensor(labels)
+    teamsLabels = tf.reshape(labels, (-1, 1))
+    
 
     Model.fit(Xtrain, ytrain, batch_size=6, epochs=100, verbose=1)
     predictions = Model(teams)
+
+    print("accuracy: ", Model.evaluate(teams, teamsLabels)[1])
 
     predictions = predictions.numpy().argmax(axis=-1).reshape(30, 16)
 
